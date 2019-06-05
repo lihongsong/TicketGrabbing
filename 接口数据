@@ -1,0 +1,29 @@
+1. 登录接口
+https://dzsw.hxzs.com.cn/ST9ZHHXAPP/Login/Login?rnd=0.13326394592869661
+
+query 
+rnd=0.13326394592869661 先假设为随机数 应该和时间有关系
+
+回调
+
+拿到 cookie
+Cookie	ASP.NET_SessionId=eogyizhm4stwsc3ijmziex0b
+
+
+
+
+提交订单接口:
+https://dzsw.hxzs.com.cn/ST9ZHHXAPP/ShipTicket/shipSeat/makeship?rnd=0.7691452379946927
+
+请求参数:
+jsonstr	[{"name":"李泓松","seat_type":"贵宾","ticket_price":"260.00","cardtype":"身份证","cardtypeid":"10","ticket_type":"成人票","idcard":"350724199409250014","ticket_type_id":"01","seat_type_id":"0111","mobile":""}]
+insProductPrice	0
+insProductID	
+
+cookie
+zhhxuinfo	66A8E67BAB0CDF58B2CFFF2F81578636D5E52B40B17B579AA67175E3DAC734280CE11BE18788C9032F93B6357DE792544791BC5496049121ADF337ED20FEBEA2F6D00E0395119D997E7EBEECE2D60607A10CD1BE8FDFF6F2DB0E090861B3CFF1D3970D72E42143200102DFB468688CD9CFA99C1E0FF31B4684F42A72A5504B4D7DF7083CA8EFDA6F39C1A375853D9451
+ASP.NET_SessionId	eogyizhm4stwsc3ijmziex0b
+
+
+选择船次页面:
+https://dzsw.hxzs.com.cn/ST9ZHHXAPP/ShipTicket/shipList/ListShip

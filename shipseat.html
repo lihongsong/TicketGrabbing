@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>智慧海星-填写订单</title>
+    <link href="/ST9ZHHXAPP/css/index.css?v=20190321" rel="stylesheet" type="text/css" />
+    <link href="/ST9ZHHXAPP/css/tip.css" rel="stylesheet" />
+    
+    <style>
+    </style>
+    <script src="/ST9ZHHXAPP/js/jquery.min.js"></script>
+    <script src="/ST9ZHHXAPP/js/common.js?v=201905101"></script>
+    <script type="text/javascript">
+        var homePath = '/ST9ZHHXAPP/';
+        var httpUrl = "";
+        var shipPath = homePath + "ShipTicket/";//船票路径
+        var shipHome = homePath + "ShipTicket/shipHome/Index";//船票首页
+        var busPath = homePath + "BusTicket/";//车票路径
+        var shipHome = homePath + "BusTicket/busHome/Index";//车票首页
+        var guidePath = homePath + "Guide/";//导游路径
+        var guideHome = homePath + "Guide/guideHome/Index";//导游首页
+        var hotelPath = homePath + "Hotel/";//酒店路径
+        var hotelHome = homePath + "Hotel/hotelHome/Index";//酒店首页
+        var mhbusPath = homePath + "MhBus/";
+        var mhbusHome = homePath + "MhBus/mhbusHome/Index";   // 包车首页
+        var mhshipPath = homePath + "MhShip/";//包船路径
+        var mhshipHome = homePath + "MhShip/mhshipHome/Index";//包船首页
+        var scenictPath = homePath + "ScenicTicket/";//门票路径
+        var scenictHome = homePath + "ScenicTicket/scenicticketHome/Index";//门票首页
+        var tmtourPath = homePath + "TmTour/";//跟团游路径
+        var tmtourHome = homePath + "TmTour/tmtourHome/Index";//跟团游首页
+        var elecsheetPath = homePath + "ElecSheet/";//电子发票路径
+        var elecsheetHome = homePath + "ElecSheet/ElecHome/Index"; //电子发票首页
+        $(function () {
+            //切换底部图片
+            if ('shipseat' == 'home') {
+                $('#foot1').removeClass('foot_nav1').addClass('foot_nav1_1').parent().css("color", "#d14555");
+            }
+            else if ('shipseat'.indexOf('order') != -1) {
+                $('#foot2').removeClass('foot_nav3').addClass('foot_nav3_3').parent().css("color", "#d14555");
+            }
+            else if ('shipseat' == 'mine') {
+                $('#foot3').removeClass('foot_nav4').addClass('foot_nav4_4').parent().css("color", "#d14555");
+            }
+
+            $("#rightReturn").click(function () {
+                window.location.href = homePath + "Home/Index";
+            });
+        });
+
+    </script>
+
+
+    
+    <script src="/ST9ZHHXAPP/js/layer.js?v=1"></script>
+    <link href="/ST9ZHHXAPP/css/layer.css?v=2" rel="stylesheet" />
+    <style>
+        .login_boxa .ticket_notice_h {
+            /*padding: 10px;*/
+            font-size: 1.167rem;
+            color: #403a3a;
+        }
+
+        .div_border {
+            border-right: 1px solid #dadada;
+            padding: 0 4px;
+        }
+
+        .div_price {
+            padding-left: 6px;
+        }
+
+        input[type="text"], input[type="password"], select {
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            border-radius: 0;
+            background: none;
+            border: none;
+            border: 0;
+        }
+
+        .leftText {
+            width: 60%;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .MoneyText {
+            width: 30%;
+            display: inline-block;
+            text-align: right;
+        }
+
+        select {
+            direction: rtl;
+        }
+
+            select option {
+                direction: ltr;
+            }
+    </style>
+    <script>
+        var MaxQuantity=3;
+        var shipstr='沈家门-东极-2019-06-06-14:30';
+        var shippricelst=[{"seatType":"贵宾","seatTypeCode":"0111","ticketType":"成人票","ticketTypeCode":"01","price":"260.00"},{"seatType":"贵宾","seatTypeCode":"0111","ticketType":"儿童票","ticketTypeCode":"02","price":"130.00"},{"seatType":"卧铺","seatTypeCode":"0114","ticketType":"成人票","ticketTypeCode":"01","price":"130.00"},{"seatType":"卧铺","seatTypeCode":"0114","ticketType":"儿童票","ticketTypeCode":"02","price":"66.00"},{"seatType":"中舱","seatTypeCode":"0113","ticketType":"成人票","ticketTypeCode":"01","price":"130.00"},{"seatType":"中舱","seatTypeCode":"0113","ticketType":"儿童票","ticketTypeCode":"02","price":"66.00"},{"seatType":"上舱","seatTypeCode":"0112","ticketType":"成人票","ticketTypeCode":"01","price":"150.00"},{"seatType":"上舱","seatTypeCode":"0112","ticketType":"儿童票","ticketTypeCode":"02","price":"76.00"}];
+        var isLogin = 'True'.toLowerCase() === 'true';
+        //未成年人是否能购保险
+        var minorBuyIns = 'false' === 'true';
+    </script>
+    <script src="/ST9ZHHXAPP/Areas/ShipTicket/Models/shipSeat.js?v=20190312"></script>
+
+</head>
+<body>
+    <div class="content">
+        
+    <div class="top_title div_return">
+        <div class="return_arrow fl"><img src="/ST9ZHHXAPP/image/return_arrow.png">  <div class="clear"></div></div>
+        <span class="title fl">填写订单</span>
+        <div class="fr rightReturn" id="rightReturn">
+            <span class="round"></span>
+            <span class="round"></span>
+            <span class="round"></span>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+
+
+    <!-- 通知公告begin -->
+    <div class="RollNotice">
+        <div class="fl NotifiText"><img src="/ST9ZHHXAPP/image/notice.png"></div>
+        <div class="box" id="box" style="color: #000;  ">
+            <div class="roll" id="roll">
+                <div id="sc1">
+                    温馨提示：自6月3日起，沈家门半升洞至普陀山航线将试行定时航班，请旅客们相互转告！
+                </div>
+                <div id="sc2"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var box = document.getElementById("box");
+            var sc1 = document.getElementById("sc1");
+            var sc2 = document.getElementById("sc2");
+            sc2.innerHTML = document.getElementById("sc1").innerHTML;
+            var width = document.getElementById("sc1").offsetWidth + document.documentElement.clientWidth;
+            $('#sc1,#sc2').css({
+                "width": width + "px",
+            });
+            $('#roll').css({
+                "width": width * 2 + "px",
+            });
+            function Marquee() {
+                if (box.scrollLeft - sc2.offsetWidth >= 0) {
+                    box.scrollLeft -= sc1.offsetWidth;
+                }
+                else {
+                    box.scrollLeft++;
+                }
+            }
+            var myvar = setInterval(Marquee, 30);
+            box.onmouseout = function () { myvar = setInterval(Marquee, 30); }
+            box.onmouseover = function () { clearInterval(myvar); }
+        });
+    </script>
+        <!-- 通知公告end -->
+        
+
+<div class="mask_shade"></div><!-- 遮罩层 -->
+
+<!-- 出发到达信息展示 -->
+<div class="departure_box">
+    <div class="train_details">
+        <div class="fl originating">沈家门</div>
+        <div class="fl icon_informa">
+            <div class="start">14:30</div>
+            <div class="line">
+                <span class="little_a fl"></span>
+                <span class="little_b fl"></span>
+            </div>
+            <div class="year">2019-06-06</div>
+        </div>
+        <div class="fr fetch">东极</div>
+        <div class="clear"></div>
+    </div>
+    <div class="choose_trip" onclick="show()"><a href="javascript:;">请添加乘客信息</a></div>
+</div>
+
+<div class="main_contents" style="padding:2.500rem 1% 2.5rem 1%; margin:15px auto 25px auto;position:relative;">
+    <div class="reminder">请仔细核对您的身份信息,以免耽误您的出行</div>
+    <div class="ticket_line">
+    </div>
+    <div id="div_insurance">
+        <div class="fl">
+            出行保障<span style="color: #686868; text-decoration: underline;padding:0 10px;" onclick="rule_details(2)">投保声明</span>
+        </div>
+        <div class="fr" style="width:30%;">
+            <div class="flip_pop_box">
+                <span class="fr TotalNum" style="color: #ff6c00; ">￥10X<span id="Num">0</span>位</span>
+                
+            </div>
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!--保险声明-->
+<div class="details-box" id="details-box_2" style="width: 280px; height: 420px; top: 50%; left: 50%; margin-left: -140px; margin-top: -210px; display: none;overflow:scroll;">
+    <div class="details-box-titled" style="background: #e75f49;">
+        <span>旅客意外险</span>
+        <i class="room-icon-close" onclick="closebox(2)"></i>
+    </div>
+    <div class="scroll" style="top: 4.167rem; bottom: 0">
+        <div class="details-box-content">
+            <div style="text-align:center;">
+                <strong>
+                    <span style="font-size:12px;color:#666666;">
+                        <p align="center" style="text-align:center;">
+                            <span style="font-size:12px;">旅客意外险</span>
+                        </p>
+                    </span>
+                </strong>
+            </div>
+            <blockquote>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p class="MsoNormal" style="text-align:left;">
+                            保险责任范围：双程含普陀山景区
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            保险费：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ￥10元
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">保险责任：</p>
+                        <p style="text-align:left;margin-left:10%;">
+                            <span class="leftText">意外伤害保险金额</span><span class="MoneyText">RMB&nbsp; <span style="color:#E53333;">300000</span></span>元
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;margin-left:10%;">
+                            <span class="leftText">意外伤害医疗保险金额</span><span class="MoneyText">RMB&nbsp;<span style="color:#E53333;"> 130000</span></span>元
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;margin-left:10%;">
+                            <span class="leftText">意外伤害医疗补充保险金额</span><span class="MoneyText">RMB&nbsp;<span style="color:#E53333;"> 20000</span></span>元
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            特别约定：
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+                            1、&nbsp; 本保险由中国人寿舟山分公司<span>48%</span>、太平洋财产险舟山中支公司<span>16%</span>、太平洋寿险舟山中支公司<span>16%</span>、人民财产保险<span>14%</span>、大地财产保险<span>6%</span>比例共同承担保险责任。
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p align="left" style="text-align:left;">
+                            <span>2</span>、未成年人身故给付保险金总和不得超过中国保险监督管理委员会规定的限额。被保险人不满10周岁的，不得超过人民币20万元。被保险人已满10周岁但未满18周岁的，不得超过人民币50万元。
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            <span>3</span>、本保险每一被保险人限购一份。
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            <span>4</span>、如需要保单，可至<span><a href="javascript:createiframe('http://eshop.e-chinalife.com:7010/ASLSS_QUERY/','外链')" style="color:blue;text-decoration:underline;">http://eshop.e-chinalife.com:7010/ASLSS_QUERY/</a></span>查询、下载并打印电子保单。
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            <span>5</span>、国寿旅游综合人身意外伤害保险（<span>2013</span>版）意外伤害医疗责任给付标准为免赔额<span>0</span>元<span>,</span>给付比例<span>100%</span>。
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            <span>6</span>、本产品适用条款为中国人寿保险股份有限公司<a style="color: blue; text-decoration: underline;" href="javascript:createiframe('http://res.vobao.com/res1/201506/1715/unlock_2013099_821116715488601.pdf','条款')">《国寿旅游综合人身意外伤害保险（2013版）利益条款》</a>和<a style="color: blue; text-decoration: underline; " href="javascript:createiframe('http://res.vobao.com/res1/201404/2310/__784119326136244.pdf','条款')">《中国人寿保险股份有限公司短期保险基本条款》</a>。
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            <span>7</span>、偿付能力告知:
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p style="text-align:left;">
+                            本公司最近一个季度的综合偿付能力点击<a href="http://www.e-chinalife.com/IRchannel/http/gb2312/quarterly_reports_1.html">这里</a>查看：
+                        </p>
+                    </span>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:12px;color:#666666;">
+                        <p align="left" style="text-align:left;">
+                            <span>8</span>、如需发票,请拨打联系电话:0580-3051449。
+                        </p>
+                    </span>
+                </div>
+            </blockquote>
+        </div>
+    </div>
+</div>
+<!--保险声明-->
+
+<div class="details-box" id="details-box_1" style="width: 280px; height: 420px; top: 50%; left: 50%; margin-left: -140px; margin-top: -210px; display: none;overflow:scroll;">
+    <div class="details-box-titled" style="background: #e75f49;">
+        <span>购票须知</span>
+        <i class="room-icon-close" onclick="closebox(1)"></i>
+    </div>
+    <div class="scroll" style="top: 4.167rem; bottom: 0">
+        <div class="details-box-content">
+            <p>
+	<strong><span style="font-size:12px;color:#666666;"></span></strong> 
+</p>
+<p align="left" style="background:white;vertical-align:middle;">
+	<strong><span style="font-size:14px;"> </span></strong> 
+</p>
+<p class="MsoNormal" align="left" style="background:white;vertical-align:middle;">
+	<br />
+</p>
+<span style="font-size:10px;color:#666666;"> 
+<p>
+	<strong><span style="color:#000000;">购票须知</span></strong> 
+</p>
+<p>
+	<strong><span style="color:#000000;">第一条</span></strong><span style="color:#000000;">&nbsp;我司线上售票均为单程票，请旅客点击购票时详细确认始发港、抵达港。因购票错误产生的损失，用户自行承担。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第二条</strong>&nbsp;目前出售实名制成人票（全票）、儿童票（半票），其他特殊票种请至窗口购买。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第三条</strong>&nbsp;儿童身高超过1.2米但不超过1.5米者，应购买半价票；超过1.5米者，应购买全价票。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第四条</strong>&nbsp;儿童票不能单独购买，需与成人票一同购买。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第五条</strong>&nbsp;每一成人旅客可免费携带身高1.2米(包括1.2米)以下儿童一名，多带的儿童应按超过的人数购买半价票。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第六条</strong>&nbsp;港口实行实名制检票，因证件不符无法登船造成损失，用户自行承担。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第七条</strong>&nbsp;严禁携带违禁品或易燃、易爆、有毒、有腐蚀性、有放射性等物品上船。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><br />
+</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>取票须知</strong></span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第一条</strong>&nbsp;&nbsp;<span style="font-size:10px;">购买普陀山至岱山至上海吴淞、上海南浦大桥（车船联运）、宁波白峰航线的旅客，必须至普陀山取票点换取纸质票，如未换取无法登船造成损失，用户自行承担；</span>每一位乘船人携带本人有效证件于发船时间前1小时抵达取票点换取纸质票。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第二条</strong><span style="font-size:10px;">&nbsp;除上述第一条所涉及的航线，购买其他航线的旅客均可刷有效身份证（或订单中二维码）检票上船；点击其他证件购票的旅客请出示相应有效证件及订单中二维码。</span><br />
+</span> 
+</p>
+<p>
+	<span style="background-color:#000000;"><span style="background-color:#FFFFFF;color:#000000;"><strong>第三条</strong>&nbsp;&nbsp;<span style="font-size:10px;">普陀山取票点地址：广福禅院（普陀山候船厅对面，海通宾馆旁），因普陀山取票点位于普陀山景区范围内，如您在景区外无法取票，请第一时间联系取票处，请勿为了取票自行购买景区门票，电话0580-6696170。</span></span></span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第四条</strong>&nbsp;&nbsp;<span style="font-size:10px;background-color:#FFFFFF;">沈家门半升洞取票点地址：沈家门半升</span><span style="font-size:10px;background-color:#FFFFFF;"></span><span style="font-size:10px;background-color:#FFFFFF;">洞客运站东极、嵊山售票窗口旁边的小岗亭（海星大巴售票处），电话0580—3013775。</span></span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第五条</strong>&nbsp;&nbsp;朱家尖客运中心取票点地址：朱家尖客运中心售票窗口或“海星逸站”线下体验店（原商务接待室，客运大厅进门左手边）。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第六条</strong>&nbsp; 除上述第一条所涉及的航线，购买其他航线的旅客如需开具发票，请至本公众号菜单“微信购票”—“我要开票”内开具电子发票（开票时效：检票之后次日开始45天之内）。根据国家相关规定，电子发票的法律效力、基本用途都与纸质发票相同。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><br />
+</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>退票须知</strong></span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第一条</strong>&nbsp;&nbsp;在乘船港退票的时限为客船规定开航时间2小时以前；团体票在客船规定开航时间24小时以前。</span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第二条</strong>&nbsp;&nbsp;<span style="font-size:10px;">卧席每人每张每10元票价核收2元退票费，散席每人每张每10元票价核收1元退票费，不足10元按10元计算，已取票旅客请携带纸质票至港口自行办理退票事宜，各航班以当天客运站公布为准。</span></span> 
+</p>
+<p>
+	<span style="color:#000000;"><strong>第三条</strong>&nbsp;&nbsp;因不可抗力或特殊天气导致停航的，未取纸质票的，在网上申请退款后，我司将进行退款，已取票的请携带纸质票至港口办理全额退票</span> 
+</p>
+<p>
+	<span style="color:#000000;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;如需帮助，请咨询：</span> 
+</p>
+<p>
+	<span style="color:#000000;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;半升洞客运站：0580-3013775</span> 
+</p>
+<p>
+	<span style="color:#000000;">&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;海星公司：0580-3889090</span> 
+</p>
+<p>
+	<br />
+</p>
+</span><br />
+        </div>
+    </div>
+</div>
+
+
+
+<div style="padding: 0 2%; height: 2.5rem; line-height: 2.5rem; font-size: 1.167rem; position: fixed; width: 96%; bottom: 4.167rem; background: #fff; color: #5191d1; ">
+    <div class="consent_rule">
+        <input type="checkbox" name="cb_goupiao" style="width:1.083rem;height:1.083rem;">
+        我已阅读并接受
+        <a href="javascript:;" onclick="rule_details(1)">《购票须知》</a>
+    </div>
+</div>
+
+<div class="boot_total">
+    应付总额：<span id="total_price" style="color: #ff6c00;font-size:1.333rem;">￥0</span>
+    <div class="fr to_pay"><a href="javascript:make();">去 付 款</a></div>
+    <div class="clear"></div>
+</div>
+
+
+<div id="div_add" style="display: none; z-index: 888; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background-color: white; padding: 0 0 20rem 0; overflow-y: hidden;">
+    <div class="top_title">
+        <div class="return_arrow fl"><img src="/ST9ZHHXAPP/image/return_arrow.png"><div class="clear"></div></div>
+        <span class="title fl">添加乘客</span>
+        <div class="clear"></div>
+    </div>
+
+    <div class="login_interf">
+        <div class="login_boxa">
+            <div class="ticket_notice_h">
+                <div class="passen_frame">
+                    <div class="fl text">常用联系人</div>
+                    <div class="fl name">
+                        <select class="fl name_select" id="select_person">
+                              <option value='李泓松|10|350724199409250014' >李泓松 350724199409250014</option>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="passen_frame">
+                    <div class="fl text">姓名</div>
+                    <div class="fl name"><input type="text" class="pass_name" id="txt_name" value="李泓松" placeholder="请输入姓名"></div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="passen_frame">
+                    <div class="fl text">证件类型</div>
+                    <div class="fl name">
+                        <select class="fl name_select" id="select_cardtype">
+                            <option value="10" selected="selected">二代身份证</option>
+                            <option value="20">其他证件</option>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="passen_frame">
+                    <div class="fl text">证件号</div>
+                    <div class="fl name"><input type="text" class="pass_name" id="txt_idcard" value="350724199409250014" placeholder="请输入证件号"></div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="passen_frame">
+                    <div class="fl text">票种</div>
+                    <div class="fl name">
+                        <select class="fl name_select" id="select_tickettype">
+                            <option value='成人票|01'>成人票</option><option value='儿童票|02'>儿童票</option>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="passen_frame">
+                    <div class="fl text">舱位-票价</div>
+                    <div class="fl name">
+                        <select class="fl name_select" id="select_seattype"></select>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="passen_frame" id="div_mobile">
+                    <div class="fl text">手机号码</div>
+                    <div class="fl name">
+                        <input class="fl name_select" id="mobile" placeholder="请输入手机号码" />
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div id="div_reg_tips" style="color:red;">*未登录购票，二代身份证的乘客需要填写手机号码。乘客信息会用作为注册信息。</div>
+            </div>
+        </div>
+        <div class="boot_total" onclick="add();" style="background: #ff931b; color: #fff;">增 加</div>
+    </div>
+</div>
+<!-- 顶部菜单 -->
+
+    </div>
+    
+</body>
+</html>

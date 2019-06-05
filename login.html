@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>智慧海星-用户登录</title>
+    <link href="/ST9ZHHXAPP/css/index.css?v=20190321" rel="stylesheet" type="text/css" />
+    <link href="/ST9ZHHXAPP/css/tip.css" rel="stylesheet" />
+    
+    <style>
+    </style>
+    <script src="/ST9ZHHXAPP/js/jquery.min.js"></script>
+    <script src="/ST9ZHHXAPP/js/common.js?v=201905101"></script>
+    <script type="text/javascript">
+        var homePath = '/ST9ZHHXAPP/';
+        var httpUrl = "";
+        var shipPath = homePath + "ShipTicket/";//船票路径
+        var shipHome = homePath + "ShipTicket/shipHome/Index";//船票首页
+        var busPath = homePath + "BusTicket/";//车票路径
+        var shipHome = homePath + "BusTicket/busHome/Index";//车票首页
+        var guidePath = homePath + "Guide/";//导游路径
+        var guideHome = homePath + "Guide/guideHome/Index";//导游首页
+        var hotelPath = homePath + "Hotel/";//酒店路径
+        var hotelHome = homePath + "Hotel/hotelHome/Index";//酒店首页
+        var mhbusPath = homePath + "MhBus/";
+        var mhbusHome = homePath + "MhBus/mhbusHome/Index";   // 包车首页
+        var mhshipPath = homePath + "MhShip/";//包船路径
+        var mhshipHome = homePath + "MhShip/mhshipHome/Index";//包船首页
+        var scenictPath = homePath + "ScenicTicket/";//门票路径
+        var scenictHome = homePath + "ScenicTicket/scenicticketHome/Index";//门票首页
+        var tmtourPath = homePath + "TmTour/";//跟团游路径
+        var tmtourHome = homePath + "TmTour/tmtourHome/Index";//跟团游首页
+        var elecsheetPath = homePath + "ElecSheet/";//电子发票路径
+        var elecsheetHome = homePath + "ElecSheet/ElecHome/Index"; //电子发票首页
+        $(function () {
+            //切换底部图片
+            if ('login' == 'home') {
+                $('#foot1').removeClass('foot_nav1').addClass('foot_nav1_1').parent().css("color", "#d14555");
+            }
+            else if ('login'.indexOf('order') != -1) {
+                $('#foot2').removeClass('foot_nav3').addClass('foot_nav3_3').parent().css("color", "#d14555");
+            }
+            else if ('login' == 'mine') {
+                $('#foot3').removeClass('foot_nav4').addClass('foot_nav4_4').parent().css("color", "#d14555");
+            }
+
+            $("#rightReturn").click(function () {
+                window.location.href = homePath + "Home/Index";
+            });
+        });
+
+    </script>
+
+
+    
+    <script src="/ST9ZHHXAPP/Models/Login.js?v=20180726"></script>
+
+</head>
+<body>
+    <div class="content">
+        
+    <div class="top_title">
+        <div class="return_arrow fl"><img src="/ST9ZHHXAPP/image/return_arrow.png">  <div class="clear"></div></div>
+        <span class="title fl">会员登录</span>
+        <div class="clear"></div>
+    </div>
+
+
+
+    <!-- 通知公告begin -->
+    <div class="RollNotice">
+        <div class="fl NotifiText"><img src="/ST9ZHHXAPP/image/notice.png"></div>
+        <div class="box" id="box" style="color: #000;  ">
+            <div class="roll" id="roll">
+                <div id="sc1">
+                    温馨提示：自6月3日起，沈家门半升洞至普陀山航线将试行定时航班，请旅客们相互转告！
+                </div>
+                <div id="sc2"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var box = document.getElementById("box");
+            var sc1 = document.getElementById("sc1");
+            var sc2 = document.getElementById("sc2");
+            sc2.innerHTML = document.getElementById("sc1").innerHTML;
+            var width = document.getElementById("sc1").offsetWidth + document.documentElement.clientWidth;
+            $('#sc1,#sc2').css({
+                "width": width + "px",
+            });
+            $('#roll').css({
+                "width": width * 2 + "px",
+            });
+            function Marquee() {
+                if (box.scrollLeft - sc2.offsetWidth >= 0) {
+                    box.scrollLeft -= sc1.offsetWidth;
+                }
+                else {
+                    box.scrollLeft++;
+                }
+            }
+            var myvar = setInterval(Marquee, 30);
+            box.onmouseout = function () { myvar = setInterval(Marquee, 30); }
+            box.onmouseover = function () { clearInterval(myvar); }
+        });
+    </script>
+        <!-- 通知公告end -->
+        
+<!-- 顶部菜单 -->
+<div class="login_interf">
+    <div class="login_top"></div>
+    <div class="login_box">
+        <div class="rounda"></div>
+        <div class="roundb"></div>
+
+        <div class="sign_box">
+            <input type="text" name="" class="sign" placeholder="请输入账号" id="username">
+        </div>
+
+        <div class="sign_box1">
+            <input type="password" name="" class="sign" placeholder="请输入密码" id="password">
+        </div>
+
+        <div class="for_find">
+            <div class="fr"><a href="/ST9ZHHXAPP/Login/ForgetPwd">忘记密码?</a></div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="sign_btn">
+            <input type="button" name="" value="登录" class="btn">
+        </div>
+
+        <div class="sign_btn1">
+            <a href="/ST9ZHHXAPP/Reg/Index" class="zc">注册</a>
+        </div>
+    </div>
+</div>
+
+    </div>
+    
+</body>
+</html>
