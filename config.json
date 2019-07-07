@@ -1,0 +1,26 @@
+{
+    "login": {
+        "zhhxuinfo": "64A12CD251817A9C93E921822A98A12EA992183B5C57BEC6CC5DBBD123FCB495D3BB02BA80BE2DEFCC9FEF6DC272DED317DE9E5113468562AAF9DBF52D57B282DB83811AA4B52036BB2D484AA830659C3D0626D59E2FAE9817F9AD543430C71CBF9984F7D92FF3B82CE9AD59DE2E77D8D6647A130BDBAF0823FCD865778C761533AEADEAC7EFACB0285EA3FC7DDBEB2F",
+        "ASP.NET_SessionId": "lyeqsbin5mzpcuv0y2oztjno"
+    },
+    "selectaddress": {
+        "startstation": "沈家门",
+        "endstation": "东极",
+        "startTime": "2019-07-10"
+    },
+    "selectDate": {
+        "date": "2019-07-10"
+    },
+    "selectClasses": {
+        "time": "06:30"
+    },
+    "selectTicket": {
+        "seatType": "下舱",
+        "ticketType": "成人票",
+        "name": "李泓松",
+        "cardtype": "身份证",
+        "cardtypeid": "10",
+        "idcard": "350724199409250014",
+        "mobile": "18850223077"
+    }
+}
